@@ -5,7 +5,6 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   Menu,
-  X,
   Home,
   Users,
   GraduationCap,
@@ -24,7 +23,6 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/#hero", label: "Home", icon: Home, isHash: true },
@@ -59,7 +57,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2 group">
           <div className="flex items-center gap-2">
@@ -72,8 +70,8 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1">
+        {/* Desktop Navigation - from lg breakpoint */}
+        <nav className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => {
             const LinkIcon = link.icon;
             return link.isHash ? (
@@ -107,8 +105,8 @@ export default function Header() {
           <ThemeToggle />
         </nav>
 
-        {/* Mobile Navigation */}
-        <div className="flex items-center gap-2 md:hidden">
+        {/* Mobile & Tablet Navigation - below lg */}
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -117,15 +115,15 @@ export default function Header() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80">
+            <SheetContent side="right" className="w-full sm:w-full">
               <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
+                <SheetTitle className="flex items-center justify-center gap-2">
                   <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground font-bold">
                     M
                   </div>
                   <span>Mahadi&apos;s World</span>
                 </SheetTitle>
-                <SheetDescription>
+                <SheetDescription className="text-center">
                   Navigate through my personal website
                 </SheetDescription>
               </SheetHeader>
@@ -139,7 +137,7 @@ export default function Header() {
                     <Button
                       key={link.href}
                       variant="ghost"
-                      className="justify-start gap-3 h-12"
+                      className="justify-center gap-3 h-12"
                       onClick={() => scrollToSection(link.href)}
                     >
                       <LinkIcon className="h-5 w-5" />
@@ -149,7 +147,7 @@ export default function Header() {
                     <Button
                       key={link.href}
                       variant={isActive(link.href) ? "secondary" : "ghost"}
-                      className="justify-start gap-3 h-12"
+                      className="justify-center gap-3 h-12"
                       asChild
                       onClick={() => setIsOpen(false)}
                     >
@@ -164,7 +162,7 @@ export default function Header() {
 
               <Separator className="my-4" />
 
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-muted-foreground text-center">
                 <p>© 2024 Mahadi</p>
                 <p className="text-xs">Made with ❤️ for my journey</p>
               </div>

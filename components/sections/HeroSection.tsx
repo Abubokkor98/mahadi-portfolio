@@ -16,13 +16,13 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-[calc(100vh-4rem)] flex items-center justify-center overflow-hidden py-10 lg:py-0"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/20 -z-10" />
 
-      <div className="container px-4 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -48,7 +48,7 @@ export default function HeroSection() {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
             >
-              Hi! I'm{" "}
+              Hi! I&apos;m{" "}
               <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
                 Mahadi
               </span>
@@ -78,7 +78,7 @@ export default function HeroSection() {
                 { label: "Age", value: "12" },
                 { label: "Grade", value: "Class 7→8" },
                 { label: "Dream", value: "Doctor" },
-              ].map((stat, index) => (
+              ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <p className="text-2xl sm:text-3xl font-bold text-foreground">
                     {stat.value}
@@ -112,14 +112,14 @@ export default function HeroSection() {
             transition={{ delay: 0.4, duration: 0.7 }}
             className="relative"
           >
-            <div className="relative aspect-square max-w-md mx-auto lg:max-w-full">
+            <div className="relative aspect-square max-w-sm mx-auto lg:max-w-md xl:max-w-lg">
               {/* Decorative background */}
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-primary/5 rounded-3xl blur-3xl" />
 
               {/* Image container */}
               <div className="relative rounded-3xl overflow-hidden border-4 border-primary/20 shadow-2xl">
                 <Image
-                  src="/images/mahadi.png"
+                  src="/images/photo1.jpeg"
                   alt="Mahadi"
                   width={600}
                   height={600}
