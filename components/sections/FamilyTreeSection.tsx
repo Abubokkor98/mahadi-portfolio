@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import {
   familyMembers,
   getMembersByGeneration,
@@ -17,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Heart } from "lucide-react";
 
 interface FamilyMemberCardProps {
   member: (typeof familyMembers)[0];
@@ -28,30 +28,45 @@ function FamilyMemberCard({ member, index }: FamilyMemberCardProps) {
     <Dialog>
       <DialogTrigger asChild>
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
-          whileHover={{ scale: 1.05, y: -5 }}
-          className="cursor-pointer"
+          transition={{
+            delay: index * 0.1,
+            duration: 0.5,
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+          }}
+          whileHover={{ scale: 1.05 }}
+          className="cursor-pointer relative z-10"
         >
-          <Card className="overflow-hidden hover:shadow-xl transition-shadow">
-            <CardContent className="p-6 text-center space-y-3">
-              <Avatar className="h-24 w-24 mx-auto border-4 border-primary/20">
-                <AvatarImage src={member.photo} alt={member.name} />
-                <AvatarFallback>{member.name[0]}</AvatarFallback>
-              </Avatar>
+          <Card className="overflow-hidden hover:shadow-xl transition-all border-2 hover:border-primary/50 w-36 sm:w-44 bg-card/50 backdrop-blur-sm">
+            <CardContent className="p-4 text-center space-y-2">
+              <div className="relative mx-auto">
+                <Avatar className="h-20 w-20 sm:h-24 sm:w-24 mx-auto border-4 border-background shadow-md">
+                  <AvatarImage
+                    src={member.photo}
+                    alt={member.name}
+                    className="object-cover"
+                  />
+                  <AvatarFallback>{member.name[0]}</AvatarFallback>
+                </Avatar>
+                {member.id === "mahadi" && (
+                  <Badge className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap bg-primary text-[10px] px-2 h-5">
+                    Me!
+                  </Badge>
+                )}
+              </div>
 
-              <div>
-                <h3 className="font-semibold text-lg">{member.name}</h3>
-                <p className="text-sm text-muted-foreground">
+              <div className="pt-2">
+                <h3 className="font-bold text-sm sm:text-base leading-tight">
+                  {member.name}
+                </h3>
+                <p className="text-xs text-muted-foreground line-clamp-1">
                   {member.relationship}
                 </p>
               </div>
-
-              {member.id === "mahadi" && (
-                <Badge className="bg-primary">That's Me!</Badge>
-              )}
             </CardContent>
           </Card>
         </motion.div>
@@ -64,7 +79,7 @@ function FamilyMemberCard({ member, index }: FamilyMemberCardProps) {
               <AvatarImage src={member.photo} alt={member.name} />
               <AvatarFallback>{member.name[0]}</AvatarFallback>
             </Avatar>
-            <div>
+            <div className="text-left">
               <DialogTitle className="text-2xl">{member.name}</DialogTitle>
               <DialogDescription className="text-base">
                 {member.relationship}
@@ -74,48 +89,44 @@ function FamilyMemberCard({ member, index }: FamilyMemberCardProps) {
         </DialogHeader>
 
         <div className="space-y-4">
-          {member.age && (
-            <div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Age:
-              </span>
-              <p className="text-base">{member.age} years old</p>
-            </div>
-          )}
+          <div className="grid grid-cols-2 gap-4">
+            {member.age && (
+              <div className="bg-muted/50 p-3 rounded-lg">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Age
+                </span>
+                <p className="font-semibold">{member.age} years</p>
+              </div>
+            )}
+            {member.birthYear && (
+              <div className="bg-muted/50 p-3 rounded-lg">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Born
+                </span>
+                <p className="font-semibold">{member.birthYear}</p>
+              </div>
+            )}
+          </div>
 
-          {member.birthYear && (
-            <div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Birth Year:
+          {(member.occupation || member.grade) && (
+            <div className="bg-muted/50 p-3 rounded-lg">
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                {member.occupation ? "Occupation" : "Grade"}
               </span>
-              <p className="text-base">{member.birthYear}</p>
-            </div>
-          )}
-
-          {member.occupation && (
-            <div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Occupation:
-              </span>
-              <p className="text-base">{member.occupation}</p>
-            </div>
-          )}
-
-          {member.grade && (
-            <div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Grade:
-              </span>
-              <p className="text-base">{member.grade}</p>
+              <p className="font-semibold">
+                {member.occupation || member.grade}
+              </p>
             </div>
           )}
 
           {member.funFact && (
-            <div>
-              <span className="text-sm font-medium text-muted-foreground">
-                Fun Fact:
+            <div className="bg-primary/5 p-4 rounded-lg border border-primary/10">
+              <span className="text-xs font-medium text-primary uppercase tracking-wider flex items-center gap-2 mb-1">
+                <span className="text-lg">✨</span> Fun Fact
               </span>
-              <p className="text-base italic">{member.funFact}</p>
+              <p className="text-sm italic text-foreground/80 leading-relaxed">
+                &ldquo;{member.funFact}&rdquo;
+              </p>
             </div>
           )}
         </div>
@@ -124,10 +135,21 @@ function FamilyMemberCard({ member, index }: FamilyMemberCardProps) {
   );
 }
 
+function ConnectorLine({ height = "h-8" }: { height?: string }) {
+  return (
+    <div className={`flex justify-center w-full ${height}`}>
+      <div className="w-0.5 h-full bg-border" />
+    </div>
+  );
+}
+
 export default function FamilyTreeSection() {
   const generation1 = getMembersByGeneration(1); // Grandparents
   const generation2 = getMembersByGeneration(2); // Parents
   const generation3 = getMembersByGeneration(3); // Children
+
+  const mother = generation2.find((m) => m.id === "mother");
+  const father = generation2.find((m) => m.id === "father");
 
   return (
     <section id="family" className="py-20 bg-muted/30">
@@ -143,122 +165,69 @@ export default function FamilyTreeSection() {
             My Family Tree
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            The amazing people who shaped who I am today and support my dreams
-            every day
+            The amazing people who shaped who I am today
           </p>
         </motion.div>
 
-        {/* Family Tree Visualization */}
-        <div className="max-w-6xl mx-auto">
-          {/* Generation 1: Grandparents */}
-          <div className="mb-12">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="flex justify-center gap-8 sm:gap-16 flex-wrap"
-            >
-              {generation1.map((member, index) => (
-                <div key={member.id} className="w-40">
-                  <FamilyMemberCard member={member} index={index} />
-                </div>
+        {/* Vertical Family Tree Layout */}
+        <div className="flex flex-col items-center">
+          {/* Level 1: Grandparents */}
+          <div className="relative">
+            <div className="flex justify-center gap-6 sm:gap-12">
+              {generation1.map((member, idx) => (
+                <FamilyMemberCard key={member.id} member={member} index={idx} />
               ))}
-            </motion.div>
+            </div>
+            {/* Connector from Grandparents to Mother */}
+            {/* We position this relative to the whole block, focused on Mother's side */}
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 w-px h-8 bg-border" />
+          </div>
 
-            {/* Connecting lines to parents */}
-            <div className="relative h-16 hidden md:block">
-              <svg
-                className="absolute inset-0 w-full h-full"
-                style={{ pointerEvents: "none" }}
-              >
-                {/* Vertical line down from grandparents */}
-                <line
-                  x1="50%"
-                  y1="0"
-                  x2="50%"
-                  y2="100%"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="text-border"
-                />
-              </svg>
+          <div className="h-8" />
+
+          {/* Level 2: Parents */}
+          <div className="relative">
+            <div className="flex justify-center items-center gap-4 sm:gap-8">
+              {mother && <FamilyMemberCard member={mother} index={2} />}
+
+              <div className="flex flex-col items-center px-2">
+                <Heart className="text-red-500 fill-red-500 w-6 h-6 animate-pulse" />
+                <div className="w-12 h-px bg-border mt-2" />
+              </div>
+
+              {father && <FamilyMemberCard member={father} index={3} />}
+            </div>
+
+            {/* Connector to Children (Centralized under the couple) */}
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-10 flex flex-col items-center">
+              <div className="w-px h-10 bg-border" />
+              {/* Horizontal bracket */}
+              <div className="w-48 sm:w-64 h-px bg-border relative">
+                <div className="absolute left-0 top-0 w-px h-4 bg-border display-none" />{" "}
+                {/* Dynamic endpoints handled by children */}
+              </div>
             </div>
           </div>
 
-          {/* Generation 2: Parents */}
-          <div className="mb-12">
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="flex justify-center gap-8 sm:gap-16 flex-wrap"
-            >
-              {generation2.map((member, index) => (
-                <div key={member.id} className="w-40">
-                  <FamilyMemberCard member={member} index={index + 2} />
-                </div>
-              ))}
-            </motion.div>
+          <div className="h-10" />
 
-            {/* Connecting lines to children */}
-            <div className="relative h-16 hidden md:block">
-              <svg
-                className="absolute inset-0 w-full h-full"
-                style={{ pointerEvents: "none" }}
-              >
-                {/* Horizontal line connecting parents */}
-                <line
-                  x1="35%"
-                  y1="0"
-                  x2="65%"
-                  y2="0"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="text-border"
-                />
-                {/* Vertical line down */}
-                <line
-                  x1="50%"
-                  y1="0"
-                  x2="50%"
-                  y2="100%"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  className="text-border"
-                />
-              </svg>
+          {/* Level 3: Children */}
+          <div className="flex justify-center gap-10 sm:gap-24 pt-4 relative">
+            {/* Decorators for connection endpoints */}
+            <div className="absolute top-0 left-1/2 -translate-x-[50%] w-[12rem] sm:w-[20rem] flex justify-between">
+              <div className="w-px h-6 bg-border" /> {/* Left child drop */}
+              <div className="w-px h-6 bg-border" /> {/* Right child drop */}
             </div>
-          </div>
 
-          {/* Generation 3: Children */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="flex justify-center gap-8 sm:gap-16 flex-wrap"
-            >
-              {generation3.map((member, index) => (
-                <div key={member.id} className="w-40">
-                  <FamilyMemberCard member={member} index={index + 4} />
-                </div>
-              ))}
-            </motion.div>
+            {generation3.map((member, idx) => (
+              <FamilyMemberCard
+                key={member.id}
+                member={member}
+                index={idx + 4}
+              />
+            ))}
           </div>
         </div>
-
-        {/* Mobile-friendly list view hint */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center text-sm text-muted-foreground mt-12 md:hidden"
-        >
-          💡 Tap on any family member to learn more about them
-        </motion.p>
       </div>
     </section>
   );

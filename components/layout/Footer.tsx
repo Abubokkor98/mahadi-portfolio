@@ -1,4 +1,5 @@
-import { Heart, Github, Mail } from "lucide-react";
+import { Heart } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -47,21 +48,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Humorous Status */}
           <div>
-            <h3 className="text-lg font-semibold mb-3">Get in Touch</h3>
-            <p className="text-sm text-muted-foreground mb-3">
-              Feel free to reach out or connect with me!
-            </p>
-            <div className="flex gap-4">
-              <a
-                href="mailto:mahadi@example.com"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Email"
-              >
-                <Mail className="h-5 w-5" />
-              </a>
-            </div>
+            <h3 className="text-lg font-semibold mb-3">System Status</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>Brain Capacity: Loading...</li>
+              <li>Gaming Skills: 110%</li>
+              <li>Homework: Error 404</li>
+              <li>Motivation: Powered by Chicken meat</li>
+            </ul>
           </div>
         </div>
 
@@ -71,8 +66,15 @@ export default function Footer() {
             © {currentYear} Mahadi. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            Made with <Heart className="h-4 w-4 text-red-500 fill-red-500" />{" "}
-            for my journey ahead
+            Made with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> by
+            <Link
+              href="https://github.com/Abubokkor98"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors"
+            >
+              Nana
+            </Link>
           </p>
         </div>
       </div>
