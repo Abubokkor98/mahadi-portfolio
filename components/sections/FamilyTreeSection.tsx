@@ -197,10 +197,8 @@ export default function FamilyTreeSection() {
             <div className="absolute left-1/2 -translate-x-1/2 -bottom-10 flex flex-col items-center">
               <div className="w-px h-10 bg-border" />
               {/* Horizontal bracket */}
-              <div className="w-48 sm:w-64 h-px bg-border relative">
-                <div className="absolute left-0 top-0 w-px h-4 bg-border display-none" />{" "}
-                {/* Dynamic endpoints handled by children */}
-              </div>
+              {/* Horizontal bracket matching children spacing (Mobile: 9.5rem, Desktop: 17rem) */}
+              <div className="w-38 sm:w-68 h-px bg-border relative" />
             </div>
           </div>
 
@@ -209,7 +207,7 @@ export default function FamilyTreeSection() {
           {/* Level 3: Children */}
           <div className="flex justify-center gap-6 sm:gap-24 pt-4 relative">
             {/* Decorators for connection endpoints */}
-            <div className="absolute top-0 left-1/2 -translate-x-[50%] w-[9.5rem] sm:w-[17rem] flex justify-between">
+            <div className="absolute top-0 left-1/2 -translate-x-[50%] w-38 sm:w-68 flex justify-between">
               <div className="w-px h-6 bg-border" /> {/* Left child drop */}
               <div className="w-px h-6 bg-border" /> {/* Right child drop */}
             </div>
