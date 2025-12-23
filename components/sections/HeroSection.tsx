@@ -38,7 +38,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium"
             >
               <Sparkles className="h-4 w-4" />
-              <span>Class 7 Student | Future Doctor</span>
+              <span>Class 8 Student | Future Doctor</span>
             </motion.div>
 
             {/* Main Heading */}
@@ -63,8 +63,8 @@ export default function HeroSection() {
               className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0"
             >
               A curious 12-year-old student, tech enthusiast, and aspiring
-              doctor. Currently waiting for my Class 7 results and excited for
-              Class 8 in January 2026!
+              doctor. Successfully passed Class 7 and now admitted to Class 8!
+              Classes start January 2026.
             </motion.p>
 
             {/* Stats */}
@@ -76,7 +76,7 @@ export default function HeroSection() {
             >
               {[
                 { label: "Age", value: "12" },
-                { label: "Grade", value: "Class 7→8" },
+                { label: "Grade", value: "Class 8" },
                 { label: "Dream", value: "Doctor" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -134,7 +134,7 @@ export default function HeroSection() {
                 transition={{ duration: 3, repeat: Infinity }}
                 className="absolute -top-4 -right-4 bg-primary text-primary-foreground px-4 py-2 rounded-full shadow-lg text-sm font-medium"
               >
-                🎓 Class 8 Soon!
+                🎓 Class 8 Admitted!
               </motion.div>
 
               <motion.div

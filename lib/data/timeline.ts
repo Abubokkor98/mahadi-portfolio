@@ -6,108 +6,90 @@ export interface TimelineEvent {
   category: "academic" | "achievement" | "milestone" | "future";
   icon?: string;
   highlights?: string[];
+  image?: string;
 }
 
 export const timeline: TimelineEvent[] = [
+  // {
+  //   id: "child-school",
+  //   year: 2017,
+  //   title: "Early Steps",
+  //   description: "Started my educational journey at a local child school.",
+  //   category: "milestone",
+  //   icon: "Baby",
+  //   highlights: [
+  //     "First steps into learning",
+  //     "Made childhood friends",
+  //     "Learned to read and write",
+  //   ],
+  // },
+  // {
+  //   id: "primary-school",
+  //   year: 2018,
+  //   title: "Primary Schooling",
+  //   description: "Completed my primary education (Class 1 to 5).",
+  //   category: "academic",
+  //   icon: "School",
+  //   highlights: [
+  //     "Completed Class 5 with good grades",
+  //     "Built a strong foundation",
+  //     "Prepared for admission tests",
+  //   ],
+  // },
   {
-    id: "start-primary",
-    year: 2019,
-    title: "Started Primary School",
-    description:
-      "My journey began! First day at school was exciting and a little scary.",
-    category: "milestone",
-    icon: "School",
-    highlights: [
-      "Made my first school friends",
-      "Discovered my love for science",
-      "Participated in annual day celebrations",
-    ],
-  },
-  {
-    id: "middle-school",
-    year: 2022,
-    title: "Entered Middle School",
-    description:
-      "Moved to middle school and started learning more advanced subjects.",
-    category: "academic",
-    icon: "BookOpen",
-    highlights: [
-      "Joined the school science club",
-      "Won first prize in drawing competition",
-      "Started learning computer basics",
-    ],
-  },
-  {
-    id: "coding-journey",
-    year: 2023,
-    title: "Discovered Coding",
-    description: "Started my coding journey and fell in love with technology!",
-    category: "achievement",
-    icon: "Code",
-    highlights: [
-      "Built my first simple program",
-      "Participated in school coding club",
-      "Created a basic calculator",
-    ],
-  },
-  {
-    id: "class-7",
+    id: "pcpsc-admission",
     year: 2024,
-    title: "Class 7 Journey",
+    title: "Joined PCPSC",
     description:
-      "An amazing year filled with learning, growth, and new experiences.",
-    category: "academic",
+      "Passed the admission test and joined Padma Cantonment Public School & College in Class 6.",
+    category: "achievement",
+    icon: "Trophy",
+    image: "/images/podmacantschool.jpg",
+    highlights: [
+      "Cleared competitive admission test",
+      "Started Class 6 at PCPSC",
+      "New campus environment",
+    ],
+  },
+  {
+    id: "class-7-current",
+    year: 2025,
+    title: "Class 7 Completed",
+    description:
+      "Successfully completed Class 7 at Padma Cantonment Public School & College and passed the final exam!",
+    category: "achievement",
     icon: "Award",
     highlights: [
-      "Excelled in science and mathematics",
-      "Made wonderful friendships",
-      "Decided to pursue medicine as a career",
-      "Participated in inter-school sports",
+      "Passed Class 7 final exam",
+      "Excelled in science subjects",
+      "Active participation in school activities",
     ],
   },
   {
-    id: "results-waiting",
-    year: 2025,
-    title: "Awaiting Class 7 Results",
-    description:
-      "Currently waiting for my Class 7 final results. Excited and hopeful!",
-    category: "milestone",
-    icon: "Clock",
-    highlights: [
-      "Completed all exams successfully",
-      "Confident about good results",
-      "Preparing for Class 8",
-      "Reading ahead for next year's subjects",
-    ],
-  },
-  {
-    id: "class-8",
+    id: "class-8-admitted",
     year: 2026,
-    title: "Looking Forward to Class 8",
+    title: "Admitted to Class 8",
     description:
-      "Ready to take on new challenges and opportunities in Class 8!",
-    category: "future",
+      "Successfully admitted to Class 8 at PCPSC. Classes will begin in January 2026.",
+    category: "milestone",
     icon: "Rocket",
     highlights: [
-      "Will start in January 2026",
-      "More advanced science topics",
-      "Aiming for top grades",
-      "One step closer to my doctor dream",
+      "Admitted to Class 8 (December 2025)",
+      "Classes start January 2026",
+      "Ready for new academic challenges",
     ],
   },
   {
     id: "future-goals",
     year: 2030,
     title: "Future Aspirations",
-    description:
-      "Working towards my dream of becoming a doctor and helping others.",
+    description: "Working towards my dream of becoming a doctor.",
     category: "future",
     icon: "Target",
     highlights: [
-      "Complete high school with excellence",
-      "Get into medical college",
-      "Make my family proud",
-      "Make a positive impact on society",
+      "Medical college admission",
+      "Serving the community",
+      "Making family proud",
     ],
   },
 ];
