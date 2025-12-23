@@ -81,7 +81,7 @@ export const timeline: TimelineEvent[] = [
   },
   {
     id: "future-goals",
-    year: 2030,
+    year: 2037,
     title: "Future Aspirations",
     description: "Working towards my dream of becoming a doctor.",
     category: "future",

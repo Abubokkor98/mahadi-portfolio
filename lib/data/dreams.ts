@@ -16,7 +16,7 @@ export const dreams: Dream[] = [
     description:
       "I want to become a doctor to help people stay healthy and save lives. Medicine fascinates me, and I love learning about the human body.",
     icon: "Stethoscope",
-    timeline: "2030 and beyond",
+    timeline: "2037 (Target)",
     steps: [
       "Excel in Science and Biology",
       "Complete medical college",
@@ -31,7 +31,7 @@ export const dreams: Dream[] = [
     description:
       "Dream of getting admission to a prestigious medical university with a scholarship.",
     icon: "GraduationCap",
-    timeline: "2026-2030",
+    timeline: "2031-2036",
     steps: [
       "Maintain excellent grades",
       "Participate in science competitions",
@@ -39,21 +39,7 @@ export const dreams: Dream[] = [
       "Apply for scholarships",
     ],
   },
-  {
-    id: "technology",
-    category: "personal",
-    title: "Master Technology",
-    description:
-      "Want to combine my medical dreams with technology - maybe create health apps or use AI in medicine.",
-    icon: "Laptop",
-    timeline: "Ongoing",
-    steps: [
-      "Learn programming languages",
-      "Build simple health-related apps",
-      "Understand AI and its applications",
-      "Innovate in medical technology",
-    ],
-  },
+
   {
     id: "community",
     category: "impact",

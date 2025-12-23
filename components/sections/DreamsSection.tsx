@@ -2,21 +2,19 @@
 
 import { motion } from "framer-motion";
 import { dreams } from "@/lib/data/dreams";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Stethoscope,
   GraduationCap,
-  Laptop,
   Heart,
   Globe,
   Sparkles,
+  CheckCircle2,
 } from "lucide-react";
 
 const iconMap: Record<string, any> = {
   Stethoscope,
   GraduationCap,
-  Laptop,
   Heart,
   Globe,
   Sparkles,
@@ -24,134 +22,110 @@ const iconMap: Record<string, any> = {
 
 function getDreamIcon(iconName: string) {
   const Icon = iconMap[iconName] || Sparkles;
-  return <Icon className="h-8 w-8" />;
-}
-
-function getCategoryGradient(category: string) {
-  const gradients = {
-    career: "from-blue-500 to-cyan-500",
-    education: "from-purple-500 to-pink-500",
-    personal: "from-orange-500 to-yellow-500",
-    impact: "from-green-500 to-emerald-500",
-  };
-  return (
-    gradients[category as keyof typeof gradients] ||
-    "from-primary to-primary/70"
-  );
+  return <Icon className="h-6 w-6" />;
 }
 
 export default function DreamsSection() {
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      career: "text-blue-500",
+      education: "text-purple-500",
+      personal: "text-orange-500",
+      impact: "text-green-500",
+    };
+    return colors[category as keyof typeof colors] || "text-primary";
+  };
+
   return (
-    <section id="dreams" className="py-20">
-      <div className="container mx-auto px-4">
+    <section id="dreams" className="py-24 bg-background">
+      <div className="container mx-auto px-4 max-w-5xl">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-20 space-y-4"
         >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            My Dreams & Aspirations
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+            My Aspirations
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every great journey starts with a dream. Here's where I'm headed and
-            what I hope to achieve
+          <p className="text-xl text-muted-foreground max-w-2xl">
+            The milestones I'm working towards and the impact I want to create.
           </p>
+          <div className="h-1 w-20 bg-primary rounded-full mt-6" />
         </motion.div>
 
-        {/* Dreams Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {/* Dreams List */}
+        <div className="space-y-16">
           {dreams.map((dream, index) => (
             <motion.div
               key={dream.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              className="group"
             >
-              <Card className="h-full hover:shadow-2xl transition-all overflow-hidden group">
-                {/* Gradient Header */}
-                <div
-                  className={`bg-gradient-to-r ${getCategoryGradient(
-                    dream.category
-                  )} p-6 text-white`}
-                >
-                  <div className="flex items-center gap-3 mb-3">
+              <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                {/* Left Column: Timeline & Icon */}
+                <div className="md:w-1/4 shrink-0 flex flex-row md:flex-col items-center md:items-start gap-4">
+                  <div
+                    className={`p-3 rounded-2xl bg-muted group-hover:bg-primary/5 transition-colors ${getCategoryColor(
+                      dream.category
+                    )}`}
+                  >
                     {getDreamIcon(dream.icon)}
-                    <Badge
-                      variant="secondary"
-                      className="bg-white/20 text-white border-white/30"
-                    >
-                      {dream.category.charAt(0).toUpperCase() +
-                        dream.category.slice(1)}
-                    </Badge>
                   </div>
-                  <CardTitle className="text-xl text-white">
-                    {dream.title}
-                  </CardTitle>
+                  <Badge variant="outline" className="px-3 py-1 text-sm">
+                    {dream.timeline}
+                  </Badge>
                 </div>
 
-                <CardContent className="p-6 space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
+                {/* Right Column: Content */}
+                <div className="md:w-3/4 space-y-6">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <span
+                        className={`text-xs font-bold uppercase tracking-wider ${getCategoryColor(
+                          dream.category
+                        )}`}
+                      >
+                        {dream.category}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground group-hover:text-primary transition-colors">
+                      {dream.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-lg text-muted-foreground leading-relaxed">
                     {dream.description}
                   </p>
 
-                  {/* Timeline */}
-                  <div className="flex items-center gap-2 text-sm">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    <span className="font-medium">Timeline:</span>
-                    <span className="text-muted-foreground">
-                      {dream.timeline}
-                    </span>
-                  </div>
-
-                  {/* Steps */}
+                  {/* Steps List */}
                   {dream.steps && dream.steps.length > 0 && (
-                    <div>
-                      <p className="text-sm font-medium mb-2">
-                        Steps to achieve:
-                      </p>
-                      <ul className="space-y-1.5">
-                        {dream.steps.map((step, idx) => (
-                          <li
-                            key={idx}
-                            className="text-sm text-muted-foreground flex items-start gap-2"
-                          >
-                            <span className="text-primary mt-1">•</span>
-                            <span>{step}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3 pt-2">
+                      {dream.steps.map((step, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-3 text-muted-foreground/90 group/step"
+                        >
+                          <CheckCircle2 className="h-5 w-5 text-primary/40 group-hover/step:text-primary mt-0.5 shrink-0 transition-colors" />
+                          <span className="text-base">{step}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
+
+              {/* Divider (except last item) */}
+              {index !== dreams.length - 1 && (
+                <div className="h-px bg-border/50  mt-16 w-full" />
+              )}
             </motion.div>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-16"
-        >
-          <Card className="max-w-3xl mx-auto bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
-            <CardContent className="p-8">
-              <h3 className="text-2xl font-bold mb-3">🌟 The Journey Ahead</h3>
-              <p className="text-lg text-muted-foreground">
-                "The future belongs to those who believe in the beauty of their
-                dreams."
-                <br />
-                <span className="text-sm">- Eleanor Roosevelt</span>
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
       </div>
     </section>
   );
