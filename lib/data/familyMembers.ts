@@ -63,7 +63,7 @@ export const familyMembers: FamilyMember[] = [
     id: "sister",
     name: "Rayana Akter",
     relationship: "Sister",
-    photo: "/images/family/family_sister_1766417512323.png",
+    photo: "/images/family/funny_cat_sister.png",
     age: 15,
     grade: "Class 10",
     funFact: "Loves to annoy me!",
