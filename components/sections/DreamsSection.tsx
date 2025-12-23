@@ -44,9 +44,9 @@ export default function DreamsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-20 space-y-4"
+          className="mb-20 space-y-4 text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold">
             My Aspirations
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl">

@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { photos, getPhotosByCategory, type Photo } from "@/lib/data/photos";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, X } from "lucide-react";
+import { ArrowLeft, Calendar, X, ImageIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function GalleryPage() {
@@ -16,11 +17,33 @@ export default function GalleryPage() {
     "all" | Photo["category"]
   >("all");
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const [loadingImages, setLoadingImages] = useState<Set<string>>(
+    new Set(photos.map((p) => p.id))
+  );
 
   const filteredPhotos = getPhotosByCategory(selectedCategory);
 
+  const handleImageError = (id: string) => {
+    setFailedImages((prev) => new Set(prev).add(id));
+    // Also remove from loading state if it fails
+    setLoadingImages((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
+  const handleImageLoad = (id: string) => {
+    setLoadingImages((prev) => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
+  };
+
   return (
-    <div className="min-h-screen py-8 sm:py-12">
+    <div className="min-h-screen py-8 sm:py-12 bg-muted/10">
       <div className="container px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
@@ -48,7 +71,7 @@ export default function GalleryPage() {
           }
           className="mb-8"
         >
-          <TabsList className="grid w-full max-w-md grid-cols-4">
+          <TabsList className="grid w-full max-w-md grid-cols-4 mx-auto sm:mx-0">
             <TabsTrigger value="all">All</TabsTrigger>
             <TabsTrigger value="personal">Personal</TabsTrigger>
             <TabsTrigger value="family">Family</TabsTrigger>
@@ -84,28 +107,63 @@ export default function GalleryPage() {
                 className="break-inside-avoid mb-4"
               >
                 <Card
-                  className="overflow-hidden cursor-pointer hover:shadow-xl transition-all group"
+                  className="overflow-hidden cursor-pointer hover:shadow-xl transition-all group border-0 bg-background/50 backdrop-blur-sm"
                   onClick={() => setSelectedPhoto(photo)}
                 >
-                  <div className="relative aspect-square bg-muted">
-                    {/* Placeholder - users will add real images */}
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/5">
-                      <div className="text-center p-6">
-                        <p className="text-sm font-medium text-muted-foreground mb-2">
-                          {photo.caption}
+                  <div className="relative aspect-4/5 bg-muted overflow-hidden rounded-lg">
+                    {/* Loading Spinner */}
+                    {loadingImages.has(photo.id) &&
+                      !failedImages.has(photo.id) && (
+                        <div className="absolute inset-0 flex items-center justify-center z-10 bg-muted/50">
+                          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                        </div>
+                      )}
+
+                    {failedImages.has(photo.id) ? (
+                      // Fallback View
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-muted/50 p-6 text-center">
+                        <div className="bg-background rounded-full p-4 mb-3 shadow-sm">
+                          <ImageIcon className="h-8 w-8 text-muted-foreground/50" />
+                        </div>
+                        <p className="text-sm font-medium text-muted-foreground">
+                          Photo Coming Soon
                         </p>
-                        <Badge variant="secondary" className="capitalize">
+                        <Badge
+                          variant="secondary"
+                          className="mt-2 capitalize text-xs opacity-70"
+                        >
                           {photo.category}
                         </Badge>
                       </div>
-                    </div>
-
-                    {/* Overlay on hover */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                      <p className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-medium">
-                        View Photo
-                      </p>
-                    </div>
+                    ) : (
+                      // Real Image
+                      <>
+                        <Image
+                          src={photo.src}
+                          alt={photo.caption || "Gallery photo"}
+                          fill
+                          className={`object-cover ${
+                            loadingImages.has(photo.id)
+                              ? "opacity-0"
+                              : "opacity-100"
+                          }`}
+                          onError={() => handleImageError(photo.id)}
+                          onLoad={() => handleImageLoad(photo.id)}
+                          // Trigger loading state immediately
+                          onLoadingComplete={() => handleImageLoad(photo.id)}
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                        {/* Overlay */}
+                        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                          <p className="text-white font-medium truncate">
+                            {photo.caption}
+                          </p>
+                          <p className="text-white/80 text-xs capitalize">
+                            {photo.category}
+                          </p>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </Card>
               </motion.div>
@@ -115,9 +173,15 @@ export default function GalleryPage() {
 
         {/* Empty State */}
         {filteredPhotos.length === 0 && (
-          <div className="text-center py-20">
+          <div className="text-center py-20 bg-muted/20 rounded-3xl">
+            <div className="bg-background inline-flex p-4 rounded-full mb-4">
+              <ImageIcon className="h-8 w-8 text-muted-foreground" />
+            </div>
+            <p className="text-lg font-medium text-foreground">
+              No photos found
+            </p>
             <p className="text-muted-foreground">
-              No photos in this category yet.
+              Check back later for new memories!
             </p>
           </div>
         )}
@@ -128,54 +192,64 @@ export default function GalleryPage() {
         open={!!selectedPhoto}
         onOpenChange={() => setSelectedPhoto(null)}
       >
-        <DialogContent className="max-w-4xl p-0 overflow-hidden">
+        <DialogContent className="max-w-5xl p-0 overflow-hidden bg-background/95 backdrop-blur-xl border-none h-[90vh] md:h-auto flex flex-col md:block">
           {selectedPhoto && (
-            <div className="relative">
+            <div className="relative flex flex-col md:flex-row h-full">
               {/* Close button */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute top-4 right-4 z-10 bg-background/80 backdrop-blur"
+                className="absolute top-4 right-4 z-50 bg-black/20 hover:bg-black/40 text-white rounded-full backdrop-blur-md"
                 onClick={() => setSelectedPhoto(null)}
               >
                 <X className="h-5 w-5" />
               </Button>
 
-              {/* Image placeholder */}
-              <div className="relative aspect-square bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center min-h-[400px]">
-                <div className="text-center p-8">
-                  <h3 className="text-2xl font-bold mb-2">
-                    {selectedPhoto.caption}
-                  </h3>
-                  <Badge variant="secondary" className="capitalize mb-4">
-                    {selectedPhoto.category}
-                  </Badge>
-                  {selectedPhoto.date && (
-                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4" />
-                      <span>
-                        {new Date(selectedPhoto.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                  )}
-                </div>
+              {/* Image Side */}
+              <div className="relative w-full md:w-2/3 h-full min-h-[40vh] bg-black/5 flex items-center justify-center">
+                {failedImages.has(selectedPhoto.id) ? (
+                  <div className="text-center p-8">
+                    <ImageIcon className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
+                    <p className="text-muted-foreground">Image not available</p>
+                  </div>
+                ) : (
+                  <div className="relative w-full h-full min-h-[400px]">
+                    <Image
+                      src={selectedPhoto.src}
+                      alt={selectedPhoto.caption || "Gallery photo"}
+                      fill
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                )}
               </div>
 
-              {/* Photo info */}
-              <div className="p-6 bg-background">
-                <h2 className="text-xl font-semibold mb-2">
-                  {selectedPhoto.caption}
-                </h2>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <Badge variant="outline" className="capitalize">
-                    {selectedPhoto.category}
-                  </Badge>
+              {/* Info Side */}
+              <div className="w-full md:w-1/3 p-6 md:p-8 flex flex-col justify-center bg-background border-l">
+                <div className="space-y-6">
+                  <div>
+                    <Badge variant="secondary" className="mb-3 capitalize">
+                      {selectedPhoto.category}
+                    </Badge>
+                    <h2 className="text-2xl font-bold leading-tight">
+                      {selectedPhoto.caption}
+                    </h2>
+                  </div>
+
                   {selectedPhoto.date && (
-                    <span className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
-                      {new Date(selectedPhoto.date).toLocaleDateString()}
-                    </span>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      <span>{selectedPhoto.date}</span>
+                    </div>
                   )}
+
+                  <div className="pt-6 border-t">
+                    <p className="text-sm text-muted-foreground">
+                      Memories from {selectedPhoto.category} collection.
+                      Capturing moments that matter.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

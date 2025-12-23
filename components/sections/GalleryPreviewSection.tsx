@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { photos } from "@/lib/data/photos";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +13,11 @@ import { ArrowRight, Image as ImageIcon } from "lucide-react";
 export default function GalleryPreviewSection() {
   // Get first 6 photos for preview
   const previewPhotos = photos.slice(0, 6);
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+
+  const handleImageError = (id: string) => {
+    setFailedImages((prev) => new Set(prev).add(id));
+  };
 
   return (
     <section className="py-20 bg-muted/30">
@@ -41,31 +48,47 @@ export default function GalleryPreviewSection() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
               whileHover={{ scale: 1.05 }}
-              className="relative aspect-square"
+              className="relative aspect-4/5"
             >
-              <Card className="h-full overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group">
-                {/* Placeholder - users will add real images */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center p-4">
-                  <div className="text-center">
-                    <ImageIcon className="h-8 w-8 mx-auto mb-2 text-muted-foreground opacity-50" />
-                    <p className="text-xs font-medium text-muted-foreground line-clamp-2">
-                      {photo.caption}
+              <Card className="h-full overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group border-0">
+                {failedImages.has(photo.id) ? (
+                  // Fallback View
+                  <div className="absolute inset-0 bg-muted/50 flex flex-col items-center justify-center p-4">
+                    <div className="bg-background rounded-full p-3 mb-2 shadow-sm">
+                      <ImageIcon className="h-6 w-6 text-muted-foreground/50" />
+                    </div>
+                    <p className="text-xs font-medium text-muted-foreground text-center">
+                      Coming Soon
                     </p>
                     <Badge
                       variant="secondary"
-                      className="mt-2 text-xs capitalize"
+                      className="mt-2 text-[10px] capitalize opacity-70"
                     >
                       {photo.category}
                     </Badge>
                   </div>
-                </div>
-
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                  <p className="text-white opacity-0 group-hover:opacity-100 transition-opacity text-sm font-medium">
-                    View in Gallery
-                  </p>
-                </div>
+                ) : (
+                  // Real Image
+                  <>
+                    <Image
+                      src={photo.src}
+                      alt={photo.caption || "Gallery preview"}
+                      fill
+                      className="object-cover"
+                      onError={() => handleImageError(photo.id)}
+                      sizes="(max-width: 768px) 50vw, 33vw"
+                    />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                      <p className="text-white text-sm font-medium truncate">
+                        {photo.caption}
+                      </p>
+                      <p className="text-white/80 text-xs capitalize">
+                        {photo.category}
+                      </p>
+                    </div>
+                  </>
+                )}
               </Card>
             </motion.div>
           ))}
