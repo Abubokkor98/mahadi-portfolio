@@ -62,9 +62,9 @@ export default function HeroSection() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-lg sm:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0"
             >
-              A curious 12-year-old student, tech enthusiast, and aspiring
-              doctor. Successfully passed Class 7 and now admitted to Class 8!
-              Classes start January 2026.
+              A curious 12-year-old student and aspiring doctor. Successfully
+              passed Class 7 and now admitted to Class 8! Classes start January
+              2026.
             </motion.p>
 
             {/* Stats */}

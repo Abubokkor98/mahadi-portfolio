@@ -4,23 +4,22 @@ import { motion } from "framer-motion";
 import { hobbies } from "@/lib/data/hobbies";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import {
   Gamepad2,
   BookOpen,
-  Palette,
   Trophy,
-  Code2,
   Music,
+  MessageCircle,
+  Activity,
 } from "lucide-react";
 
 const iconMap: Record<string, any> = {
   Gamepad2,
   BookOpen,
-  Palette,
   Trophy,
-  Code2,
   Music,
+  MessageCircle,
+  Activity,
 };
 
 function getHobbyIcon(iconName: string) {
@@ -34,6 +33,7 @@ function getCategoryColor(category: string) {
     sports: "bg-green-500/10 text-green-700 dark:text-green-400",
     technology: "bg-blue-500/10 text-blue-700 dark:text-blue-400",
     academic: "bg-orange-500/10 text-orange-700 dark:text-orange-400",
+    social: "bg-pink-500/10 text-pink-700 dark:text-pink-400",
   };
   return colors[category as keyof typeof colors] || "bg-primary/10";
 }
@@ -87,15 +87,6 @@ export default function HobbiesSection() {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {hobby.description}
                   </p>
-
-                  {/* Skill Level */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Skill Level</span>
-                      <span className="font-medium">{hobby.skillLevel}%</span>
-                    </div>
-                    <Progress value={hobby.skillLevel} className="h-2" />
-                  </div>
 
                   {/* Category Badge */}
                   <Badge
