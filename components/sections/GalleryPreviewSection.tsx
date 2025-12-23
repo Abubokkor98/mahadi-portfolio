@@ -38,7 +38,6 @@ export default function GalleryPreviewSection() {
           </p>
         </motion.div>
 
-        {/* Photo Grid Preview */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto mb-12">
           {previewPhotos.map((photo, index) => (
             <motion.div
@@ -48,47 +47,49 @@ export default function GalleryPreviewSection() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.4 }}
               whileHover={{ scale: 1.05 }}
-              className="relative aspect-4/5"
+              className="relative"
             >
-              <Card className="h-full overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group border-0">
-                {failedImages.has(photo.id) ? (
-                  // Fallback View
-                  <div className="absolute inset-0 bg-muted/50 flex flex-col items-center justify-center p-4">
-                    <div className="bg-background rounded-full p-3 mb-2 shadow-sm">
-                      <ImageIcon className="h-6 w-6 text-muted-foreground/50" />
-                    </div>
-                    <p className="text-xs font-medium text-muted-foreground text-center">
-                      Coming Soon
-                    </p>
-                    <Badge
-                      variant="secondary"
-                      className="mt-2 text-[10px] capitalize opacity-70"
-                    >
-                      {photo.category}
-                    </Badge>
-                  </div>
-                ) : (
-                  // Real Image
-                  <>
-                    <Image
-                      src={photo.src}
-                      alt={photo.caption || "Gallery preview"}
-                      fill
-                      className="object-cover"
-                      onError={() => handleImageError(photo.id)}
-                      sizes="(max-width: 768px) 50vw, 33vw"
-                    />
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                      <p className="text-white text-sm font-medium truncate">
-                        {photo.caption}
+              <Card className="h-full p-0 overflow-hidden cursor-pointer hover:shadow-xl transition-shadow group border-0 bg-background/50 backdrop-blur-sm">
+                <div className="relative aspect-[4/5] bg-muted overflow-hidden">
+                  {failedImages.has(photo.id) ? (
+                    // Fallback View
+                    <div className="absolute inset-0 bg-muted/50 flex flex-col items-center justify-center p-4">
+                      <div className="bg-background rounded-full p-3 mb-2 shadow-sm">
+                        <ImageIcon className="h-6 w-6 text-muted-foreground/50" />
+                      </div>
+                      <p className="text-xs font-medium text-muted-foreground text-center">
+                        Coming Soon
                       </p>
-                      <p className="text-white/80 text-xs capitalize">
+                      <Badge
+                        variant="secondary"
+                        className="mt-2 text-[10px] capitalize opacity-70"
+                      >
                         {photo.category}
-                      </p>
+                      </Badge>
                     </div>
-                  </>
-                )}
+                  ) : (
+                    // Real Image
+                    <>
+                      <Image
+                        src={photo.src}
+                        alt={photo.caption || "Gallery preview"}
+                        fill
+                        className="w-full h-full object-cover transition-opacity duration-300"
+                        onError={() => handleImageError(photo.id)}
+                        sizes="(max-width: 768px) 50vw, 33vw"
+                      />
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                        <p className="text-white text-sm font-medium truncate">
+                          {photo.caption}
+                        </p>
+                        <p className="text-white/80 text-xs capitalize">
+                          {photo.category}
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </div>
               </Card>
             </motion.div>
           ))}

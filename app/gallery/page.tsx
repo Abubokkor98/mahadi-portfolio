@@ -44,7 +44,7 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen py-8 sm:py-12 bg-muted/10">
-      <div className="container px-4">
+      <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Button variant="ghost" size="icon" asChild>
@@ -107,10 +107,10 @@ export default function GalleryPage() {
                 className="break-inside-avoid mb-4"
               >
                 <Card
-                  className="overflow-hidden cursor-pointer hover:shadow-xl transition-all group border-0 bg-background/50 backdrop-blur-sm"
+                  className="p-0 overflow-hidden cursor-pointer hover:shadow-xl transition-all group border-0 bg-background/50 backdrop-blur-sm"
                   onClick={() => setSelectedPhoto(photo)}
                 >
-                  <div className="relative aspect-4/5 bg-muted overflow-hidden rounded-lg">
+                  <div className="relative aspect-4/5 bg-muted overflow-hidden">
                     {/* Loading Spinner */}
                     {loadingImages.has(photo.id) &&
                       !failedImages.has(photo.id) && (
@@ -142,7 +142,7 @@ export default function GalleryPage() {
                           src={photo.src}
                           alt={photo.caption || "Gallery photo"}
                           fill
-                          className={`object-cover ${
+                          className={`w-full h-full object-cover transition-opacity duration-300 ${
                             loadingImages.has(photo.id)
                               ? "opacity-0"
                               : "opacity-100"
