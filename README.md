@@ -12,19 +12,19 @@ The story behind this website is quite special. When Mahadi asked me for his own
 
 The primary objective of this application is to capture the essence of Mahadi's vibrant personality and his curiosity, his dreams of becoming a doctor, and his strong family bonds. It is designed to be more than just a static webpage; it is an interactive narrative of his life, built with modern web technologies to ensure a premium and engaging user experience.
 
-## Design Philosophy: The "Magical Lofi" Aesthetic
+## Design Philosophy: Modern Tech-Minimalist
 
-The visual identity of this project is rooted in a **"Magical Lofi"** design language. We moved away from generic web aesthetics to create something truly unique and soothing.
+The visual identity of this project is built around a **"Modern Tech-Minimalist"** aesthetic.
 
-- **Color Palette**: The application utilises a sophisticated palette dominated by **Pale Lavender (`#fdf4ff`)** as the background, accented with soft purples (`#c084fc`) and gentle pinks (`#f472b6`). This creates a calm, dreamy atmosphere.
-- **Typography**: To complement the visual theme, we employed **Dancing Script** for headers to add a touch of personal, handwritten warmth, and **Quicksand** for body text to ensure readability with a modern, friendly character.
-- **Visual Elements**: The interface features glassmorphism effects, soft shadows, and rounded corners, contributing to a "premium" and cohesive look. Micro-animations and smooth transitions bring the interface to life without overwhelming the user.
+- **Color Palette**: The application features a timeless **Monochrome** aesthetic. The primary color is a deep, professional **Slate/Zinc** (almost black), creating a high-contrast, easy-to-read interface against pure white backgrounds.
+- **Typography**: We utilized **JetBrains Mono**, a professional developer typeface, throughout the application to give it a distinct, smart, and technical character that hints at his learning journey.
+- **Visual Elements**: The interface combines the structure of a technical dashboard with the warmth of a personal portfolio, featuring smooth animations, clean lines, and glassmorphism effects.
 
 ## Technology Stack
 
 This project is engineered using a robust, modern stack to ensure performance, scalability, and maintainability:
 
-- **Framework**: [Next.js 15+](https://nextjs.org/) (App Router) - For server-side rendering and static site generation.
+- **Framework**: [Next.js 16+](https://nextjs.org/) (App Router) - For server-side rendering and static site generation.
 - **Language**: [TypeScript](https://www.typescriptlang.org/) - Ensuring type safety and code reliability.
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) - For utility-first, responsive styling.
 - **Animations**: [Framer Motion](https://www.framer.com/motion/) - Powering the smooth enter/exit animations and interactive gestures.
@@ -79,7 +79,7 @@ To set up this project locally, follow these instructions:
 
 ### Prerequisites
 
-Ensure you have **Node.js** (v18 or higher) and **pnpm** installed on your machine.
+Ensure you have **Node.js** (v18 or higher) installed on your machine.
 
 ### Installation
 
