@@ -41,6 +41,38 @@ function getTimelineIcon(iconName?: string) {
 }
 
 function getCategoryStyles(category: string) {
+  //** keeping this style code here, in case we need it in the future */
+  // const styles = {
+  //   academic: {
+  //     color: "text-blue-700 dark:text-blue-400",
+  //     bg: "bg-blue-500/10",
+  //     border: "border-blue-500/20",
+  //     accent: "bg-blue-500/10",
+  //     iconColor: "text-blue-700 dark:text-blue-400",
+  //   },
+  //   achievement: {
+  //     color: "text-purple-700 dark:text-purple-400",
+  //     bg: "bg-purple-500/10",
+  //     border: "border-purple-500/20",
+  //     accent: "bg-purple-500/10",
+  //     iconColor: "text-purple-700 dark:text-purple-400",
+  //   },
+  //   milestone: {
+  //     color: "text-pink-700 dark:text-pink-400",
+  //     bg: "bg-pink-500/10",
+  //     border: "border-pink-500/20",
+  //     accent: "bg-pink-500/10",
+  //     iconColor: "text-pink-700 dark:text-pink-400",
+  //   },
+  //   future: {
+  //     color: "text-green-700 dark:text-green-400",
+  //     bg: "bg-green-500/10",
+  //     border: "border-green-500/20",
+  //     accent: "bg-green-500/10",
+  //     iconColor: "text-green-700 dark:text-green-400",
+  //   },
+  // };
+
   const styles = {
     academic: {
       color: "text-primary",
