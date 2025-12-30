@@ -67,11 +67,12 @@ A forward-looking section detailing his goals.
 
 ### 6. Photo Gallery
 
-A dedicated space for memories.
+A dedicated space for memories, featuring a premium interactive experience.
 
-- **Masonry Layout**: Photos are arranged in an organic, masonry-style grid that handles images of varying aspect ratios elegantly.
-- **Immersive Lightbox**: Clicking a photo opens a full-screen, immersive lightbox with zoom capabilities, keyboard navigation, and detailed captions.
-- **Categorisation**: Users can filter photos by categories (Family, Personal, Cousins) to find specific memories easily.
+- **Premium 3D Stacked Carousel**: A stunning, depth-aware rotary carousel that elegantly displays photos with smooth spring animations and 3D perspective.
+- **Touch Swipe Navigation**: Fully responsive touch controls allowing users to swipe left or right to navigate through memories on mobile and tablet devices.
+- **Smart Responsive Layout**: An intelligent dual-navigation system that adapts to screen size—side floating buttons for desktop, and non-intrusive bottom controls for mobile devices.
+- **Glassmorphism Design**: Featured images are framed with modern blurred glass effects and dynamic depth shadows, creating a high-end visual aesthetic.
 
 ## Getting Started
 
