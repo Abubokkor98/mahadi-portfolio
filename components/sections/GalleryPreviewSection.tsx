@@ -284,18 +284,12 @@ export default function GalleryPreviewSection() {
           transition={{ delay: 0.5 }}
           className="text-center"
         >
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              size="lg"
-              asChild
-              className="gap-2 shadow-md shadow-primary/20 transition-shadow"
-            >
-              <Link href="/gallery">
-                View Full Gallery
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </motion.div>
+          <Button size="lg" asChild>
+            <Link href="/gallery" className="gap-2">
+              View Full Gallery
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
 
           <motion.p
             className="text-sm text-muted-foreground mt-6 font-medium"
